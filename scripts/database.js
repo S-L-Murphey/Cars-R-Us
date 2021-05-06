@@ -75,6 +75,19 @@ const database = {
             price: 999.99
         }
     ],
+    carType:[
+        {
+            id: 1,
+            carStyle: "Car",
+        },
+        {
+            id: 2, 
+            carStyle: "SUV",
+        },{
+            id: 3, 
+            carStyle: "Truck"
+        },
+    ],
     customOrders: [
         {
             id: 1,
@@ -82,6 +95,7 @@ const database = {
             interiorId: 3,
             technologyId: 1,
             wheelsId: 4,
+            carTypeId: 2,
             timestamp: 1614659931693
         }
     ],
@@ -103,6 +117,9 @@ export const getTech = () => {
 }
 export const getWheels = () => {
     return [...database.wheels]
+}
+export const getCarType = () => {
+    return [...database.carType]
 }
 export const getOrders = () => {
     return [...database.customOrders]
@@ -129,6 +146,10 @@ export const setTech = (id) => {
 
 export const setWheel = (id) => {
     database.orderBuilder.wheelsId = id
+}
+
+export const setCarType = (id) => {
+    database.orderBuilder.carTypeId = id
 }
 
 
@@ -161,13 +182,19 @@ export const addCustomOrder = () => {
     //we need to reset that orderBuilder state 
     database.orderBuilder = {}
 
+    /* The CustomEvent() constructor creates a new CustomEvent. The CustomEvent interface represents 
+    events initialized by an app for any purpose. So for our CustomEvent, the name of it is 
+    "stateChanged", which must match up with our eventListener
+    for this function.(see main.js) */
+
+    const myCustomEvent = new CustomEvent("stateChanged")
+
+
     //Broadcast a notification that permanent state has changed/
-    /*Dispatches an event at the specifief EventTarget, invoking the affected EventListener 
+
+    /*Dispatches an event at the specified EventTarget, invoking the affected EventListener 
     in the appropriate order. The 'event' being dispatched here is what is in the parentheses.
-    The CustomEvent interface represents events initialized by an app for any purpose. So for
-    our CustomEvent, the name of it is "stateChanged", which must match up with our eventListener
-    for this function.(see main.js)
     
     See carsRUs module for invoking of the addCustomOrder function. */
-    document.dispatchEvent(new CustomEvent("stateChanged"))
+    document.dispatchEvent(myCustomEvent)
 }

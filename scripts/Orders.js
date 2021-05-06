@@ -1,4 +1,4 @@
-import { getOrders, getColors, getFabric, getTech, getWheels } from "./database.js"
+import { getOrders, getColors, getFabric, getTech, getWheels, getCarType } from "./database.js"
 
 const buildOrderListItem = (order) => {
 
@@ -6,6 +6,7 @@ const buildOrderListItem = (order) => {
     const fabrics = getFabric()
     const techs = getTech()
     const wheels = getWheels()
+    const carTypes = getCarType()
 
     const foundColor = colors.find(
         (color) => {
@@ -22,13 +23,18 @@ const buildOrderListItem = (order) => {
     const foundWheels = wheels.find(
         (wheel) => {
             return wheel.id === order.wheelsId
+        })
+    const foundCarType = carTypes.find(
+        (carType) => {
+            return carType.id === order.carTypeId
         }
-)
+    )
 
-    const totalCost = (foundColor.price + foundInterior.price + foundTech.price + foundWheels.price)
-
+    let totalCost = (foundColor.price + foundInterior.price + foundTech.price + foundWheels.price)
+    
+    let myCost = foundCarType.id >= 3 ? totalCost * 2.25 : (foundCarType.id < 2 ? totalCost : totalCost * 1.5)
     return `<li> 
-            Order #${order.id} costs a total of $${totalCost.toFixed(2)}
+            Order #${order.id} costs a total of $${myCost.toFixed(2)}
     </li>`
 };
  

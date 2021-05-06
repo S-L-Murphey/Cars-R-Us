@@ -4,6 +4,7 @@ import { userTech } from "./Technology.js"
 import { userWheel } from "./Wheels.js"
 import { Orders } from "./Orders.js"
 import { addCustomOrder } from "./database.js"
+import { userVehicle } from "./carTypes.js"
 
 
 document.addEventListener(
@@ -42,6 +43,11 @@ export const carsRUs = () => {
     <h2>Wheels</h2>
     ${userWheel()}
     </section>
+    </article>
+
+    <article class="user__Vehicle">
+    <h2>Vehicle Type</h2>
+    ${userVehicle()}
     </article>
 
     <article>
